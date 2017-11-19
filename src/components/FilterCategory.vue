@@ -19,7 +19,7 @@
 -->
 
 <template>
-    <v-filter-category-select v-if="filter.fieldType === 'select'" :filter="filter"></v-filter-category-select>
+    <v-filter-category-select v-if="vFilter.fieldType === 'select'" :vFilter="vFilter"></v-filter-category-select>
 
         <!--</c:when>
         <c:when test="${elem.value.FieldType == 'selectmultiple' }">
@@ -989,7 +989,7 @@
     export default
     {
         props:{
-            filter:{
+            vFilter:{
                 type: Object,
                 required: true
             }
@@ -998,7 +998,7 @@
             "v-filter-category-select": FilterCategorySelect
         },
         watch: {
-            filter(){
+            vFilter(){
                 console.log('filter changed',this.filter);
                 this.$emit('changeFilter', this.filter);
             }

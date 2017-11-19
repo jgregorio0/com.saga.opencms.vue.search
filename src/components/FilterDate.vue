@@ -14,13 +14,13 @@
 }-->
 
 <template>
-    <div :class="'form-group ' + filter.class + ' filter filter-date'" :id="'filter-' + filter.count">
-        <label :for="filter.id"
-               v-if="filter.label">{{filter.label}}</label>
-        <label :for="filter.id" class="sr-only"
-               v-else>{{filter.id}}</label>
-        <input type="text" :name="filter.id" :id="filter.id" class="form-control datepicker"
-               v-model="filter.value">
+    <div :class="'form-group ' + vFilter.class + ' filter filter-date'" :id="'filter-' + vFilter.count">
+        <label :for="vFilter.id"
+               v-if="vFilter.label">{{vFilter.label}}</label>
+        <label :for="vFilter.id" class="sr-only"
+               v-else>{{vFilter.id}}</label>
+        <input type="text" :name="vFilter.id" :id="vFilter.id" class="form-control datepicker"
+               v-model="vFilter.value">
     </div>
 </template>
 
@@ -28,7 +28,7 @@
     export default
     {
         props:{
-            filter:{
+            vFilter:{
                 type: Object,
                 required: true
             }

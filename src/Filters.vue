@@ -1,6 +1,6 @@
 <template>
-    <div :id="id" class="filters" >
-        <v-filter v-for="(filter, index) in filters" :filter="filter"></v-filter>
+    <div :id="id" class="vFilters" >
+        <v-filter v-for="(vFilter, index) in vFilters" :vFilter="vFilter"></v-filter>
     </div>
 </template>
 
@@ -11,10 +11,10 @@
             id:{
                 required: true
             },
-            locale:{
+            vLocale:{
                 required: true
             },
-            filters:{
+            vFilters:{
                 required: true,
                 type: Array
             }

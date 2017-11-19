@@ -1,9 +1,9 @@
 <template>
-    <v-filter-text v-if="filter.type == 'TextFilter' && !filter.isPrincipal" :filter="filter"></v-filter-text>
-    <v-filter-text-principal v-else-if="filter.type == 'TextFilter' && filter.isPrincipal" :filter="filter"></v-filter-text-principal>
-    <v-filter-category v-else-if="filter.type == 'CategoryFilter'" :filter="filter"></v-filter-category>
-    <v-filter-date v-else-if="filter.type == 'Date1Filter'" :filter="filter"></v-filter-date>
-    <v-filter-date-between v-else-if="filter.type == 'Date2Filter'" :filter="filter"></v-filter-date-between>
+    <v-filter-text v-if="vFilter.type == 'TextFilter' && !vFilter.isPrincipal" :vFilter="vFilter"></v-filter-text>
+    <v-filter-text-principal v-else-if="vFilter.type == 'TextFilter' && vFilter.isPrincipal" :vFilter="vFilter"></v-filter-text-principal>
+    <v-filter-category v-else-if="vFilter.type == 'CategoryFilter'" :vFilter="vFilter"></v-filter-category>
+    <v-filter-date v-else-if="vFilter.type == 'Date1Filter'" :vFilter="vFilter"></v-filter-date>
+    <v-filter-date-between v-else-if="vFilter.type == 'Date2Filter'" :vFilter="vFilter"></v-filter-date-between>
 </template>
 
 <script>
@@ -16,7 +16,7 @@
     export default
     {
         props:{
-            filter:{
+            vFilter:{
                 type: Object,
                 required: true
             }

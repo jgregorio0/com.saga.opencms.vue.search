@@ -8,8 +8,8 @@ export const filters = new Vue({
     return h(Filters, {
       props: {
         id: this.$el.attributes.id.value + "-filters",
-        locale: this.$el.attributes.locale.value,
-        filters: JSON.parse(this.$el.attributes.filters.value)
+        vLocale: this.$el.attributes.vLocale.value,
+        vFilters: JSON.parse(this.$el.attributes.vFilters.value)
         //,
         //start: Number(this.$el.attributes.start.value),
         //total: 0,
@@ -28,11 +28,11 @@ export const results = new Vue({
     return h(Results, {
       props: {
         id: this.$el.attributes.id.value + "-results",
-        locale: this.$el.attributes.locale.value,
-        rows: Number(this.$el.attributes.rows.value),
-        start: Number(this.$el.attributes.start.value),
-        controller: this.$el.attributes.controller.value,
-        query: this.$el.attributes.query.value
+        vLocale: this.$el.attributes.vLocale.value,
+        vRows: Number(this.$el.attributes.vRows.value),
+        vStart: Number(this.$el.attributes.vStart.value),
+        vController: this.$el.attributes.vController.value,
+        vQuery: this.$el.attributes.vQuery.value
         //,
         //start: Number(this.$el.attributes.start.value),
         //total: 0,

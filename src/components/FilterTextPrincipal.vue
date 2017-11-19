@@ -1,26 +1,26 @@
 <template>
     <div class="row">
         <div class="col-sm-6 col-sm-offset-3">
-            <label :for="filter.id"
-                   v-if="filter.label">{{filter.label}}</label>
+            <label :for="vFilter.id"
+                   v-if="vFilter.label">{{vFilter.label}}</label>
 
-            <div :class="'input-group filter filter-text filter-main ' + filter.class"
-                 :id="'filter-' + filter.count">
+            <div :class="'input-group filter filter-text filter-main ' + vFilter.class"
+                 :id="'filter-' + vFilter.count">
                 <input type="text" class="form-control block-level"
-                       :placeholder="filter.placeholder" :id="filter.id" :name="filter.id"
-                       v-model="filter.value" @change="changeFilter">
+                       :placeholder="vFilter.placeholder" :id="vFilter.id" :name="vFilter.id"
+                       v-model="vFilter.value" @change="changeFilter">
                 <span class="input-group-btn">
                     <button type="button" name="submit"
-                            :value="filter.buttonText" :class="'btn ' + filter.buttonClass">
-                        {{filter.buttonText}}
+                            :value="vFilter.buttonText" :class="'btn ' + vFilter.buttonClass">
+                        {{vFilter.buttonText}}
                     </button>
                 </span>
             </div>
 
             <div class="checkbox"
-                 v-if="filter.showExactSearch">
+                 v-if="vFilter.showExactSearch">
                 <label for="exactSearch" class="exact-search">
-                    <input type="checkbox" name="exactSearch" id="exactSearch">{{filter.labelExactResult}}
+                    <input type="checkbox" name="exactSearch" id="exactSearch">{{vFilter.labelExactResult}}
                 </label>
             </div>
         </div>
@@ -29,18 +29,19 @@
 
 <script>
     import Filters from '../Filters.vue'
+
     export default
     {
         props:{
-            filter:{
+            vFilter:{
                 type: Object,
                 required: true
             }
         },
         methods: {
             changeFilter(){
-                console.log(Filters, '$emit changeFilter',this.filter);
-//                Filters.emit('changeFilter', this.filter);
+                console.log('$emit changeFilters', Filters);
+                filters.$emit('changeFilters', Filters);
             }
         }
     }

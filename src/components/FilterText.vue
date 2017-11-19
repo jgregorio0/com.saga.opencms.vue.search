@@ -1,12 +1,12 @@
 <template>
-    <div :class="'form-group filter filter-text ' + filter.class" :id="'filter-' + filter.count">
-        <label :for="filter.id"
-               v-if="filter.label">{{filter.label}}</label>
-        <label :for="filter.id" class="sr-only"
-               v-else>{{filter.placeholder}}</label>
-        <input type="text" class="form-control" :placeholder="filter.placeholder"
-               :name="filter.id" :id="filter.id"
-               v-model:value="filter.value">
+    <div :class="'form-group filter filter-text ' + vFilter.class" :id="'filter-' + vFilter.count">
+        <label :for="vFilter.id"
+               v-if="vFilter.label">{{vFilter.label}}</label>
+        <label :for="vFilter.id" class="sr-only"
+               v-else>{{vFilter.placeholder}}</label>
+        <input type="text" class="form-control" :placeholder="vFilter.placeholder"
+               :name="vFilter.id" :id="vFilter.id"
+               v-model="vFilter.value">
     </div>
 </template>
 
@@ -14,7 +14,7 @@
     export default
     {
         props:{
-            filter:{
+            vFilter:{
                 type: Object,
                 required: true
             }

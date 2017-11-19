@@ -18,32 +18,33 @@
             id:{
                 required: true
             },
-            locale:{
+            vLocale:{
                 required: true
             },
-            rows:{
+            vRows:{
                 required: true,
                 type: Number
             },
-            start:{
+            vStart:{
                 required: true,
                 type: Number
             },
-            controller:{
+            vController:{
                 required: true
             },
-            query:{
+            vQuery:{
                 required: true
             }
         },
         data: function(){
-            return {filters: []}
+            return {vFilters: []}
         },
         created(){
-            filters.$on('changeFilter', (filter) => {
-                console.log('$on changeFilter', filter);
-                this.filters = [filter];
-            });
+            this.filters = filters.$children[0].filters;/*
+            filters.$on('changeFilters', (filters) => {
+                console.log('$on changeFilters', filters);
+                this.filters = filters;
+            });*/
         }
 
     }
