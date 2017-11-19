@@ -20,11 +20,13 @@
         <label :for="vFilter.id" class="sr-only"
                v-else>{{vFilter.id}}</label>
         <input type="text" :name="vFilter.id" :id="vFilter.id" class="form-control datepicker"
-               v-model="vFilter.value">
+               v-model="vFilter.value" @input="filtersChanged">
     </div>
 </template>
 
 <script>
+    import {filters} from '../main'
+
     export default
     {
         props:{
@@ -33,10 +35,9 @@
                 required: true
             }
         },
-        watch: {
-            filter(){
-                console.log('filter changed',this.filter);
-                this.$emit('changeFilter', this.filter);
+        methods: {
+            filtersChanged(){
+                filters.$emit('filtersChanged');
             }
         }
     }

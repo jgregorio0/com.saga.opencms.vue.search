@@ -8,7 +8,7 @@
                  :id="'filter-' + vFilter.count">
                 <input type="text" class="form-control block-level"
                        :placeholder="vFilter.placeholder" :id="vFilter.id" :name="vFilter.id"
-                       v-model="vFilter.value" @change="changeFilter">
+                       v-model="vFilter.value" @input="filtersChanged">
                 <span class="input-group-btn">
                     <button type="button" name="submit"
                             :value="vFilter.buttonText" :class="'btn ' + vFilter.buttonClass">
@@ -20,7 +20,8 @@
             <div class="checkbox"
                  v-if="vFilter.showExactSearch">
                 <label for="exactSearch" class="exact-search">
-                    <input type="checkbox" name="exactSearch" id="exactSearch">{{vFilter.labelExactResult}}
+                    <input type="checkbox" name="exactSearch" id="exactSearch"
+                           v-model="vFilter.isExactSearch" @change="filtersChanged">{{vFilter.labelExactResult}}
                 </label>
             </div>
         </div>
@@ -28,7 +29,7 @@
 </template>
 
 <script>
-    import Filters from '../Filters.vue'
+    import {filters} from '../main'
 
     export default
     {
@@ -39,9 +40,8 @@
             }
         },
         methods: {
-            changeFilter(){
-                console.log('$emit changeFilters', Filters);
-                filters.$emit('changeFilters', Filters);
+            filtersChanged(){
+                filters.$emit('filtersChanged');
             }
         }
     }

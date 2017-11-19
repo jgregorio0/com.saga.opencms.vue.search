@@ -1,12 +1,12 @@
 <template>
     <div :id="id" class="results">
         <p>id: {{id}}</p>
-        <p>locale: {{locale}}</p>
-        <p>rows: {{rows}}</p>
-        <p>start: {{start}}</p>
-        <p>controller: {{controller}}</p>
-        <p>query: {{query}}</p>
-        <p>filters: {{filters}}</p>
+        <p>locale: {{vLocale}}</p>
+        <p>rows: {{vRows}}</p>
+        <p>start: {{vStart}}</p>
+        <p>controller: {{vController}}</p>
+        <p>query: {{vQuery}}</p>
+        <p>filters: {{vFilters}}</p>
     </div>
 </template>
 
@@ -40,11 +40,10 @@
             return {vFilters: []}
         },
         created(){
-            this.filters = filters.$children[0].filters;/*
-            filters.$on('changeFilters', (filters) => {
-                console.log('$on changeFilters', filters);
-                this.filters = filters;
-            });*/
+            filters.$on('filtersChanged', () => {
+                console.log('$on filtersChanged', filters._vnode.data.props.vFilters);
+                this.vFilters = filters._vnode.data.props.vFilters;
+            });
         }
 
     }

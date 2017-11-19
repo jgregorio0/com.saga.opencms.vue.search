@@ -29,7 +29,7 @@
         <div class="block-drop"
              v-if="vFilter.fieldType == 'select'">
             <select class="form-control" :name="vFilter.id" :id="vFilter.id"
-                    v-model="vFilter.value">
+                    v-model="vFilter.value" @input="filtersChanged">
                 <option disabled value="" class="nivel-0"
                         v-if="vFilter.showEmptyOption"></option>
                 <option v-for="category in vFilter.categories"
@@ -40,6 +40,8 @@
 </template>
 
 <script>
+    import {filters} from '../main'
+
     export default
     {
         props:{
@@ -48,10 +50,9 @@
                 required: true
             }
         },
-        watch: {
-            filter(){
-                console.log('filter changed',this.filter);
-                this.$emit('changeFilter', this.filter);
+        methods: {
+            filtersChanged(){
+                filters.$emit('filtersChanged');
             }
         }
     }

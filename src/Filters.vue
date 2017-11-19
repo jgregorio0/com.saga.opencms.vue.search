@@ -1,6 +1,6 @@
 <template>
     <div :id="id" class="vFilters" >
-        <v-filter v-for="(vFilter, index) in vFilters" :vFilter="vFilter"></v-filter>
+        <v-filter v-for="(vFilter, index) in vFilters" :vFilter="vFilter" :key="vFilter.id"></v-filter>
     </div>
 </template>
 
@@ -21,11 +21,6 @@
         },
         components:{
             'v-filter': Filter
-        },
-        methods:{
-            changeFilters(){
-                console.log('filters has been changed', this.filters)
-            }
         }
     }
 </script>

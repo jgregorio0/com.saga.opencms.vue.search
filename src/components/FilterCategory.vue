@@ -996,12 +996,6 @@
         },
         components:{
             "v-filter-category-select": FilterCategorySelect
-        },
-        watch: {
-            vFilter(){
-                console.log('filter changed',this.filter);
-                this.$emit('changeFilter', this.filter);
-            }
         }
     }
 </script>

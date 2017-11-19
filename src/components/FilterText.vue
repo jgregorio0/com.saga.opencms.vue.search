@@ -6,11 +6,13 @@
                v-else>{{vFilter.placeholder}}</label>
         <input type="text" class="form-control" :placeholder="vFilter.placeholder"
                :name="vFilter.id" :id="vFilter.id"
-               v-model="vFilter.value">
+               v-model="vFilter.value" @input="filtersChanged">
     </div>
 </template>
 
 <script>
+    import {filters} from '../main'
+
     export default
     {
         props:{
@@ -19,10 +21,9 @@
                 required: true
             }
         },
-        watch: {
-            filter(){
-                console.log('filter changed',this.filter);
-                this.$emit('changeFilter', this.filter);
+        methods: {
+            filtersChanged(){
+                filters.$emit('filtersChanged');
             }
         }
     }
