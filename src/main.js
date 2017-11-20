@@ -1,6 +1,9 @@
 import Vue from "vue";
+import VueResource from 'vue-resource'
 import Filters from "./Filters.vue";
 import Results from "./Results.vue";
+
+Vue.use(VueResource);
 
 export const filters = new Vue({
     el: 'v-filters',

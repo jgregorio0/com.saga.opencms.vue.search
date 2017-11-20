@@ -7,6 +7,7 @@
         <p>controller: {{vController}}</p>
         <p>query: {{vQuery}}</p>
         <p>filters: {{vFilters}}</p>
+        <p>search: GET {{ vController }}?q={{ query }}&filters={{ vFilters }}</p>
     </div>
 </template>
 
