@@ -40,7 +40,7 @@
 </template>
 
 <script>
-    import {filters} from '../main'
+    import {events} from '../main'
 
     export default
     {
@@ -52,7 +52,7 @@
         },
         methods: {
             filtersChanged(){
-                filters.$emit('filtersChanged');
+                events.$emit('filtersChanged');
             }
         }
     }

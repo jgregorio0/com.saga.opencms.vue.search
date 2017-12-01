@@ -5,9 +5,8 @@
         <!--LIST-->
         <v-list :vDatas="vDatas"></v-list>
         
-
         <!--MORE BTN-->
-        <v-more :vLoading="vLoading" :vRows="vRows" :vStart="vStart" :vTotal="vTotal"></v-more>
+        <v-more :vLoading="vLoading" :pRows="pRows" :vStart="vStart" :vTotal="vTotal"></v-more>
 
         <!--LOADING-->
         <v-loading :vLoading="vLoading"></v-loading>
@@ -15,6 +14,7 @@
 </template>
 
 <script>
+    import {events} from './main.js'
     import {filters} from './main.js'
     import List from './components/List.vue'
     import More from './components/More.vue'
@@ -25,32 +25,33 @@
             id:{
                 required: true
             },
-            vLocale:{
+            pLocale:{
                 required: true
             },
-            vRows:{
+            pRows:{
                 required: true,
                 type: Number
             },
-            vStart:{
+            pStart:{
                 required: true,
                 type: Number
             },
-            vController:{
+            pController:{
                 required: true
             },
-            vQuery:{
+            pQuery:{
                 required: true
             }
         },
         data: function(){
             return {
-                vFilters: [],
+                vFilters: filters._vnode.data.props.pFilters,
                 vLoading: false,
+                vStart: this.pStart,
                 vTotal: 0,
                 vDatasSize: 0,
                 vDatas: [],
-                vFields: "",
+                vFields: ""
             }
         },
         components:{
@@ -59,10 +60,15 @@
             "v-loading": Loading
         },
         created(){
-            filters.$on('filtersChanged', () => {
-                console.log('$on filtersChanged', filters._vnode.data.props.vFilters);
-                this.vFilters = filters._vnode.data.props.vFilters;
+            events.$on('filtersChanged', () => {
+//                console.log('$on filtersChanged', filters._vnode.data.props.pFilters);
+//                this.vFilters = filters._vnode.data.props.pFilters;
+                this.initResults();
             });
+            events.$on('loadMoreResults', () => {
+//                console.log('on filters loadMoreResults');
+                this.loadMoreResults();
+            })
         },
         mounted(){
             this.loadResults();
@@ -74,7 +80,7 @@
              * start === 0 means first loading.
              */
             loadResults: function () {
-                console.log("loadResults", this.vStart);
+//                console.log("loadResults", this.vStart);
 
                 if (this.validateContext()) {
 
@@ -88,20 +94,20 @@
              *
              */
             validateContext: function () {
-                console.debug("validateContext", this.vController, this.vLocale, this.vRows);
+//                console.debug("validateContext", this.pController, this.pLocale, this.pRows);
 
                 // controller
-                if (!this.vController) {
+                if (!this.pController) {
                     throw Error("controller undefined");
                 }
 
                 // locale
-                if (!this.vLocale) {
+                if (!this.pLocale) {
                     throw Error("locale undefined");
                 }
 
                 // rows
-                if (this.vRows === undefined) {
+                if (this.pRows === undefined) {
                     throw Error("rows undefined");
                 }
 
@@ -114,7 +120,7 @@
              * RESPONSE {"error": true/false, "errorMsg": "...", "errorTrace": "....", "dataSize": 10, "data": []}
              */
             getResults: function () {
-                console.debug("getResults");
+//                console.debug("getResults");
 
                 var params = this.getResultsParams();
 
@@ -124,7 +130,7 @@
                     this.vLoading = true;
 
                     // Load data from controller
-                    ((this.$http.get(this.vController, {params: params}).then(function (response) {
+                    ((this.$http.get(this.pController, {params: params}).then(function (response) {
                         // Response to JSON
                         try {
                             if (response.status !== 200) {
@@ -133,14 +139,15 @@
 
                             var jRes = response.body;
 
+                            this.update(jRes);
                             // Check if error
-                            if (!jRes.error) {
+                            /*if (!jRes.error) {
 
                                 // If validate then update
                                 this.update(jRes);
                             } else {
                                 console.error("JSON Response", jRes.errorMsg, jRes.errorTrace);
-                            }
+                            }*/
                         } catch (err) {
                             console.error('loading data', params, response, err);
                         } finally {
@@ -159,14 +166,14 @@
              * Load params for update list
              */
             getResultsParams: function () {
-                console.debug("getResultsParams", this.vLocale, this.vRows, this.vStart, this.vQuery, this.vFilters);
+//                console.debug("getResultsParams", this.pLocale, this.pRows, this.vStart, this.pQuery, this.vFilters);
                 var params = {};
 
                 // params
-                params.locale = this.vLocale;
-                params.rows = this.vRows;
+                params.locale = this.pLocale;
+                params.rows = this.pRows;
                 params.start = this.vStart;
-                params.query = encodeURI(this.vQuery);
+                params.query = encodeURI(this.pQuery);
                 params.filters = encodeURI(JSON.stringify(this.vFilters));
 
                 return params;
@@ -178,9 +185,9 @@
              * @param params
              */
             validateGetResultsParams: function (params) {
-                console.debug("validateGetResultsParams", this.vController, params.locale, params.start);
+//                console.debug("validateGetResultsParams", this.pController, params.locale, params.start);
                 // controller
-                if (!this.vController) {
+                if (!this.pController) {
                     throw Error("controller must be defined")
                 }
 
@@ -201,16 +208,18 @@
              * Update attributes after receiving json response
              */
             update: function (jRes) {
-                console.debug("update", jRes);
-                this.vTotal = Number(jRes.total);
-                this.vDatasSize = Number(jRes.dataSize);
+//                console.debug("update", jRes);
+//                this.vTotal = Number(jRes.total);
+                this.vTotal = Number(jRes.response.numFound);
+//                this.vDatasSize = Number(jRes.dataSize);
+                this.vDatasSize = Number(jRes.response.docs.length);
                 if (this.vStart == 0) {
-                    this.vDatas = jRes.data;
+                    this.vDatas = jRes.response.docs;
                 } else {
-                    this.vDatas = this.vDatas.concat(jRes.data);
+                    this.vDatas = this.vDatas.concat(jRes.response.docs);
                 }
 
-                //this.vQuery = jRes.query;
+                //this.pQuery = jRes.query;
                 this.vFields = jRes.vFields;
             },
 
@@ -219,7 +228,7 @@
              * start === 0 means first loading.
              */
             loadMoreResults: function () {
-                this.vStart = (this.vStart + this.vRows);
+                this.vStart = (this.vStart + this.pRows);
                 this.loadResults();
             },
 

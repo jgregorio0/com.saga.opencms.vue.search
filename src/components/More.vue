@@ -4,7 +4,7 @@
 
         <!--MORE RESULTS-->
         <button type="button" class="btn btn-brand btn-lg vue-list-more-btn"
-            v-if="vRows + vStart < vTotal"
+            v-if="pRows + vStart < vTotal"
         @click="loadMoreResults()">
             <span class="inline-b v-align-m">
                 <!--<fmt:message key="search.more.results.btn"/>-->More results
@@ -23,7 +23,8 @@
 </template>
 
 <script>
-    import Results from '../Results.vue'
+    import {events} from '../main.js'
+
     export default
     {
         props:{
@@ -31,7 +32,7 @@
                 type: Boolean,
                 required: true
             },
-            vRows:{
+            pRows:{
                 type: Number,
                 required: true
             },
@@ -46,8 +47,7 @@
         },
         methods:{
             loadMoreResults(){
-                //TODO throws error?
-                Results.loadMoreResults();
+                events.$emit('loadMoreResults');
             }
         }
     }

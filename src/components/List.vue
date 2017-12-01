@@ -2,7 +2,7 @@
     <div id="list" class="col-lg-12 nopadding">
         <ul>
             <li v-for="vData in vDatas" :ref="vData.id">
-                <v-list-title :data="vData"></v-list-title>
+                <v-list-title :vData="vData"></v-list-title>
             </li>
         </ul>
     </div>

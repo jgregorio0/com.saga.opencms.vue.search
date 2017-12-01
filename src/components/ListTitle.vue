@@ -21,7 +21,7 @@
         props:{
             vData:{
                 type: Object,
-                default: {}
+                required: true
             }
         }
     }

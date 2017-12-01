@@ -6,17 +6,23 @@
 
 <script>
     import Filter from './components/Filter.vue'
+
     export default {
         props:{
             id:{
                 required: true
             },
-            vLocale:{
+            pLocale:{
                 required: true
             },
-            vFilters:{
+            pFilters:{
                 required: true,
                 type: Array
+            }
+        },
+        data(){
+            return {
+                vFilters: this.pFilters.slice()
             }
         },
         components:{
