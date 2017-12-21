@@ -1,24 +1,23 @@
-<%@ page import="com.saga.opencms.vue.SgSolrJson" %>
-<%@ page import="org.apache.commons.io.IOUtils" %>
-<%@ page import="org.apache.commons.lang3.StringUtils" %>
-<%@ page import="org.apache.commons.logging.Log" %>
-<%@ page import="org.opencms.json.JSONException" %>
-<%@ page import="org.opencms.json.JSONObject" %>
-<%@ page import="org.opencms.main.CmsLog" %>
-<%@ page import="java.io.IOException" %>
-<%@ page import="java.net.URLDecoder" %>
-<%@ page import="java.util.HashMap" %>
-<%@ page import="java.util.Map" %>
+package com.saga.opencms.vue
 
-<%@page buffer="none" session="false" trimDirectiveWhitespaces="true" %>
+import org.apache.commons.io.IOUtils
+import org.apache.commons.lang3.StringUtils
+import org.apache.commons.logging.Log
+import org.opencms.json.JSONException
+import org.opencms.json.JSONObject
+import org.opencms.main.CmsLog
 
-<%--LOAD DATA FROM PARAMETERS--%>
-<%!
-    final Log LOG = CmsLog.getLog("com.saga.opencms.vue.v-controller.jsp");
+import javax.servlet.http.HttpServletRequest
+
+/**
+ * Created by jgregorio on 21/12/2017.
+ */
+class SgSearchVueController {
+    final Log LOG = CmsLog.getLog(SgSearchVueController);
 
     public static final String PAYLOAD_PARAMS = "params";
 
-    JSONObject params;
+    private JSONObject params;
 
     private String locale;
     private String site;
@@ -97,7 +96,7 @@
         LOG.debug("index: " + index);
     }
 
-    private String getParam(String paramName){
+    private String getParam(String paramName) {
         String paramValue = null;
         try {
             paramValue = params.get(paramName).toString();
@@ -142,26 +141,4 @@
 
         filters
     }
-%>
-<%
-    JSONObject jRes = new JSONObject();
-    try {
-        load(request);
-        if (validate()) {
-            String qLocale = generateQueryLocale();
-            String qRows = "&rows=" + iRows;
-            String qStart = "&start=" + iStart;
-            String qFilters = generateQueryFilters();
-            String solrquery = query + qLocale + qRows + qStart;
-            Map<String, String> ctxt = loadCtxt();
-            SgSolrJson solr = new SgSolrJson(request, ctxt);
-            jRes = solr.searchSolrFields(solrquery);
-        }
-    } catch (Exception e) {
-        jRes = SgSolrJson.errorJResponse(e);
-    } finally {
-        response.setContentType("text/html");
-        response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(jRes.toString());
-    }
-%>
+}

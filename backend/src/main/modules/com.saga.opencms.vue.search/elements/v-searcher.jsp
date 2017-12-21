@@ -20,10 +20,12 @@
 				   pLocale="${cms.locale}"
 				   pRows="10"
 				   pStart="0"
-				   pController="<cms:link>/system/modules/com.saga.opencms.vue/elements/v-controller.jsp</cms:link>"
+				   <%--pController="<cms:link>/system/modules/com.saga.opencms.vue/elements/v-controller.jsp</cms:link>"--%>
+				   pController="<cms:link>./v-controller.jsp</cms:link>"
 				   pQuery='&fq=type:("image")&fq=parent-folders:("/sites/default/")'>
 		</v-results>
-		<script src="<cms:link>/system/modules/com.saga.opencms.vue/resources/js/v-search/build.js</cms:link>"></script>
+		<%--<script src="<cms:link>/system/modules/com.saga.opencms.vue/resources/js/v-search/build.js</cms:link>"></script>--%>
+		<script src="<cms:link>./build.js</cms:link>"></script>
 	</div>
 	
 </cms:bundle>
